@@ -12,6 +12,7 @@ import {
   Button,
   Icon,
   useBreakpointValue,
+  Spinner,
 } from "@chakra-ui/react";
 
 import { RiRefreshLine } from "react-icons/ri";
@@ -55,7 +56,7 @@ export default function User({ id }: IParams) {
     return response.data;
   }
 
-  const { data, isLoading, refetch } = useQuery(
+  const { data, isLoading, refetch, isFetching } = useQuery(
     ["users", id],
     () => getUser(id),
     {
@@ -82,6 +83,9 @@ export default function User({ id }: IParams) {
               onClick={() => refetch()}
             >
               Atualizar
+              {!isLoading && isFetching && (
+                <Spinner size="sm" color="gray.500" ml="4" />
+              )}
             </Button>
           </Flex>
           <Table colorScheme="whiteAlpha" marginTop={5}>
